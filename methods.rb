@@ -1,3 +1,8 @@
+# PREDEFINED VARIABLES
+
+line_break = "===============================================================================\n\n"
+
+
 # ACCEPTING USER GENERATED CODE
 
 def accept_input(seq_length)
@@ -8,9 +13,9 @@ def accept_input(seq_length)
 
 	# Account for Incorrect Inputs      ### IMPORTANT ###
 	if input.length != seq_length || input_check.length != 0
-		puts "===============================================================================\n\n"
+		puts line_break
 		puts "ERROR:\nPlease follow the instructions and enter a 4 sequence color code!\n\n"
-		puts "===============================================================================\n\n\n"
+		puts line_break
 		input = ""
 		accept_input(seq_length)
 	else

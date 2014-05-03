@@ -12,22 +12,27 @@ input = ""
 input_array = []
 prune_combo = []
 score = nil
+line_break = "===============================================================================\n\n"
+
+
+# THE MASTERMIND GAME
 
 #  Intro and Instructions
 puts "\nWelcome to Mastermind!\n\n"
 puts "INSTRUCTIONS:\nInput a code sequence of 4 random colors from a total of six colors (Red, Green, Blue, Yellow, Orange, Purple) and the computer will try to guess it within 10 turns\n\n"
-puts "===============================================================================\n\n"
+puts line_break
+
 
 # User Input Code
 answer = accept_input(4)
-puts "===============================================================================\n\n"
-puts "Your Answer: #{answer} is invisible to the computer \n\n"
+puts line_break
+puts "Your code #{answer} is invisible to the computer. The computer will begin to guess now... \n\n"
 
 
 # Main Loop of the Game
 loop do
 
-	puts "===============================================================================\n\n\n"
+	puts line_break
 	puts "TRY NUMBER: #{tries}\n\n "
 
 	# If First Try, Computer Makes a Random Guess
@@ -65,18 +70,18 @@ loop do
 
 	# Winning
 	if score == [2, 2, 2, 2]
-		puts "===============================================================================\n\n\n"
+		puts line_break
 		puts "YOU LOSE!\n\nThe computer guessed the correct sequence #{answer} in just #{tries} guesses.\n\n\n"
-		puts "===============================================================================\n\n"
+		puts line_break
 		break
 	end
 
 	tries += 1
 
 	if tries > max_tries
-		puts "===============================================================================\n\n\n"
+		puts line_break
 		puts "YOU WIN!\n\nYou beat the computer! The computer was unable to guess the code in 10 tries\n\n\n"
-		puts "===============================================================================\n\n\n"
+		puts line_break
 		break
 	end
 
