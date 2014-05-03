@@ -3,14 +3,15 @@ load 'methods.rb'
 # PREDEFINED VARIABLES
 
 colors = ['R', 'G', 'B', 'Y', 'O', 'P']
-seq_length = 4
 total_color = colors.length
-max_tries = 10
+total_combo = colors.repeated_permutation(4).to_a 								# all possible code combinations
+guess = [colors.sample, colors.sample, colors.sample, colors.sample]			# first guess of the game (random)
 tries = 1
-input_array = []
-win = false
+max_tries = 10
 input = ""
-
+input_array = []
+prune_combo = []
+score = nil
 
 #  Intro and Instructions
 puts "\nWelcome to Mastermind!\n\n"
@@ -18,7 +19,7 @@ puts "INSTRUCTIONS:\nInput a code sequence of 4 random colors from a total of si
 puts "===============================================================================\n\n"
 
 # User Input Code
-answer = accept_input(seq_length)
+answer = accept_input(4)
 puts "===============================================================================\n\n"
 puts "Your Answer: #{answer} is invisible to the computer \n\n"
 
@@ -26,46 +27,57 @@ puts "Your Answer: #{answer} is invisible to the computer \n\n"
 # Main Loop of the Game
 loop do
 
-	if win
+	puts "===============================================================================\n\n\n"
+	puts "TRY NUMBER: #{tries}\n\n "
+
+	# If First Try, Computer Makes a Random Guess
+	if tries == 1
+		puts "Guess is: #{guess}\n\n"
+		score = scoring(answer, guess, colors)
+		puts "Score: #{score}\n\n"
+
+
+		# FILTER THESE BASED ON SCORE
+
+	# If Second Try
+	else
+
+		# Use Pruning Algorithm to Filter All Possible Combinations by Comparing Them to the Initial Guess and Seeing if the Resulting Score is Equal to the Initial Score
+		total_combo.each do |combo|
+			prune_score = scoring(guess, combo, colors)
+			if prune_score == score
+				prune_combo.push combo
+			end
+		end
+
+		# Pick New Guess from Pruned Combination
+		guess = prune_combo.sample
+		prune_combo.delete(guess)			# delete new guess from the Prune Combination array
+		total_combo = prune_combo 		# reset total_combo to the prune_combo
+		prune_combo = []
+
+		puts "Guess is: #{guess}\n\n"
+		score = scoring(answer, guess, colors)
+		puts "Score: #{score}\n\n"
+
+	end
+
+
+	# Winning
+	if score == [2, 2, 2, 2]
 		puts "===============================================================================\n\n\n"
-		puts "The computer guessed the correct sequence #{answer} in just #{tries} guesses.\n\n\n"
+		puts "YOU LOSE\n\nThe computer guessed the correct sequence #{answer} in just #{tries} guesses.\n\n\n"
 		puts "===============================================================================\n\n"
 		break
+	end
 
-	# If Exceed max_tries, End the Game
-	elsif tries > max_tries
+	tries += 1
+
+	if tries > max_tries
 		puts "===============================================================================\n\n\n"
-		puts "You beat the computer! The computer was unable to guess the code in 10 tries\n\n\n"
+		puts "YOU WIN!\n\nYou beat the computer! The computer was unable to guess the code in 10 tries\n\n\n"
 		puts "===============================================================================\n\n\n"
 		break
-
-	elsif win == false
-		puts "===============================================================================\n\n\n"
-		puts "TRY NUMBER: #{tries}\n\n "
-
-		# If First Try, Computer Makes a Random Guess
-		if tries == 1
-			guess = [colors.sample, colors.sample, colors.sample, colors.sample]
-			puts "Guess is: #{guess}\n\n"
-			score = scoring(answer, guess, colors)
-			puts "Score: #{score}"
-
-			# GENERATE ALL POSSIBLE COMBINATIONS
-
-			# FILTER THESE BASED ON SCORE
-
-		# If Second to Tenth Try, Use Pruning Algorithm
-		else
-			puts "balls\n\n"
-
-		end
-
-		if score == [2, 2, 2, 2]
-			win = true
-		end
-
-		tries += 1
-
 	end
 
 end
