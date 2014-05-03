@@ -3,10 +3,11 @@
 def accept_input(seq_length)
 	print "Enter your 4 sequence color code. Select from R (Red), G (Green), B (Blue), Y (Yellow), O (Orange), P (Purple). \n\nYour input should be in the form: RGBY: "
 	input = gets.chomp
+	input_check = input.gsub(/[RGBYOP]/, "")
 	puts "\n"
 
 	# Account for Incorrect Inputs      ### IMPORTANT ###
-	if input.length != seq_length
+	if input.length != seq_length || input_check.length != 0
 		puts "===============================================================================\n\n"
 		puts "ERROR:\nPlease follow the instructions and enter a 4 sequence color code!\n\n"
 		puts "===============================================================================\n\n\n"

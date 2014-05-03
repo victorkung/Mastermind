@@ -39,7 +39,7 @@ loop do
 
 		# FILTER THESE BASED ON SCORE
 
-	# If Second Try
+	# If Between Second and Tenth Try
 	else
 
 		# Use Pruning Algorithm to Filter All Possible Combinations by Comparing Them to the Initial Guess and Seeing if the Resulting Score is Equal to the Initial Score
@@ -66,7 +66,7 @@ loop do
 	# Winning
 	if score == [2, 2, 2, 2]
 		puts "===============================================================================\n\n\n"
-		puts "YOU LOSE\n\nThe computer guessed the correct sequence #{answer} in just #{tries} guesses.\n\n\n"
+		puts "YOU LOSE!\n\nThe computer guessed the correct sequence #{answer} in just #{tries} guesses.\n\n\n"
 		puts "===============================================================================\n\n"
 		break
 	end
